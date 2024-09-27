@@ -24,8 +24,8 @@ app_spa_proxy_launch_cmd = getenv("APP_SPA_PROXY_LAUNCH_CMD")
 
 
 app = FastAPI()
-templates = Jinja2Templates(directory=app_public)
 app.mount("/public", StaticFiles(directory=app_public), name="public")
+templates = Jinja2Templates(directory=app_public)
 
 
 @app.get("/api/reply")

@@ -4,6 +4,15 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
 const apiProxyTarget = env.APP_HTTP_URL;
+const BASE = env.APP_HTTP_PUBLIC;
+const APP_ENVIROMENT = env.APP_ENVIRONMENT;
+
+// Determina el modo (desarrollo o producción)
+const isProduction = APP_ENVIROMENT?.toLowerCase() === 'production';
+
+// Define la base dependiendo del modo
+const baseURL = isProduction ? `${BASE}` : './';
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	define: {
@@ -13,7 +22,7 @@ export default defineConfig({
 		global: {},
 	},
 	plugins: [react()],
-	base: '/public/',
+	base: baseURL,
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),
@@ -33,5 +42,18 @@ export default defineConfig({
 	build: {
 		outDir: '../backend/public',
 		emptyOutDir: true,
+		minify: true,
+		assetsDir: 'assets',
+		cssCodeSplit: false,
+		sourcemap: false,
+		ssr: false,
+		rollupOptions: {
+			treeshake: true,
+			output: {
+				entryFileNames: `assets/index.js`,
+				chunkFileNames: `assets/index-chunk.js`,
+				assetFileNames: `assets/[name].[ext]`,
+			},
+		},
 	},
 });
