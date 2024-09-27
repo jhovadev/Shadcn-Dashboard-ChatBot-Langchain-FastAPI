@@ -1,5 +1,6 @@
 # Ignorar directorio de node_modules de frontend
 frontend/node_modules/
+frontend/dist/
 
 # Ignorar directorio de dependencias de Python del backend
 backend/__pycache__/
@@ -7,10 +8,6 @@ backend/.venv/
 
 # Ignorar archivos de entorno
 .env
-
-# Ignorar archivos generados
-frontend/dist/
-backend/public/
 
 # Ignorar otros archivos de configuración o temporales si es necesario
 *.pyc
