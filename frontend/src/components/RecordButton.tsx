@@ -1,4 +1,4 @@
-import { Loader } from 'lucide-react';
+import { Loader, Mic, MicOff } from 'lucide-react';
 import { Button } from './ui/button';
 import { useState } from 'react';
 import AudioRTC from '../lib/AudioRTC';
@@ -31,8 +31,8 @@ enum Status {
 }
 
 const labelMapper = {
-	[Status.IDLE]: 'Grabar',
-	[Status.RECORDING]: 'Detener',
+	[Status.IDLE]: <Mic />,
+	[Status.RECORDING]: <MicOff />,
 };
 
 const processStatusMapper = {
@@ -76,16 +76,21 @@ export default function RecordButton(props: props) {
 		<>
 			<Button
 				onClick={onClick}
-				variant={'ringHover'}
+				variant={'destructive'}
 				className={
-					(cn('flex justify-evenly gap-2 transition-all'),
+					(cn(
+						'flex justify-evenly gap-2 rounded-full transition-all'
+					),
 					status === Status.RECORDING ? 'bg-secondary' : 'bg-primary')
 				}
 			>
-				{loading && <Loader className='mr-2 animate-spin' />}
-				{labelMapper[status]}
+				{loading ? (
+					<Loader className='animate-spin' />
+				) : (
+					labelMapper[status]
+				)}
 			</Button>
-			{loading && <Loader className='animate-spin' />}
+			{/* loading && <Loader className='animate-spin' /> */}
 		</>
 	);
 }
