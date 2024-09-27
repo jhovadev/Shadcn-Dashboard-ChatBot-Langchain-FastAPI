@@ -1,6 +1,26 @@
 import { Button } from '@/components/ui/button';
 import Chat from '@/components/Chat';
 
+import { TrendingUp } from 'lucide-react';
+import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import {
+	ChartConfig,
+	ChartContainer,
+	ChartTooltip,
+	ChartTooltipContent,
+} from '@/components/ui/chart';
+
+const chartConfig: ChartConfig = {
+	desktop: {
+		label: 'Desktop',
+		color: 'hsl(var(--chart-1))',
+	},
+	mobile: {
+		label: 'Mobile',
+		color: 'hsl(var(--chart-2))',
+	},
+} satisfies ChartConfig;
+
 import {
 	Card,
 	CardHeader,
@@ -10,14 +30,50 @@ import {
 	CardContent,
 } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+('use client');
+
+import { Payment, columns } from './columns';
+import { DataTable } from './data-table';
+import { useState } from 'react';
 
 export default function Dashboard() {
+	const [data, setData] = useState<Payment[]>([
+		{
+			id: '728ed52f',
+			amount: 100,
+			status: 'pending',
+			email: 'me@example.com',
+		},
+		{
+			id: '728ed52f',
+			amount: 100,
+			status: 'pending',
+			email: 'ma@example.com',
+		},
+		{
+			id: '728ed52f',
+			amount: 200,
+			status: 'processing',
+			email: 'mi@example.com',
+		},
+		{
+			id: '728ed52f',
+			amount: 300,
+			status: 'success',
+			email: 'm@example.com',
+		},
+	]);
 	return (
 		<>
 			<div className='grid auto-rows-max items-start gap-4 md:gap-8'>
 				<h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
 					Dashboard
 				</h1>
+				<DataTable
+					columns={columns}
+					data={data}
+				/>
+
 				<div className='grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4'>
 					<Card
 						className='sm:col-span-2'

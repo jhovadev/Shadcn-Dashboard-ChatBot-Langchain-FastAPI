@@ -20,7 +20,8 @@ const fetchAudioToText = async (audio: Blob) => {
 };
 
 type props = {
-	onResult?: (result: { text: string }) => void;
+	onResult?: (result: string) => void;
+	//	onResult?: (result: { text: string }) => void;
 };
 
 enum Status {
@@ -61,9 +62,10 @@ export default function RecordButton(props: props) {
 				const response = await fetchAudioToText(waveBlob);
 				console.log(response);
 
-				props.onResult?.(response);
+				props.onResult?.(response.text);
 			} catch (error) {
-				props.onResult?.({ text: `${error}` });
+				//props.onResult?.({ text: `${error}` });
+				props.onResult?.(`${error}`);
 			} finally {
 				setLoading(false);
 			}

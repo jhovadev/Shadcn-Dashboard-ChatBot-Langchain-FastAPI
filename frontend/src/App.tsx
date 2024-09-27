@@ -1,3 +1,5 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
 import {
 	TooltipProvider,
 	Tooltip,
@@ -253,17 +255,10 @@ function App() {
 									size='icon'
 									className='overflow-hidden rounded-full'
 								>
-									<img
-										src='/placeholder.svg'
-										width={36}
-										height={36}
-										alt='Avatar'
-										className='overflow-hidden rounded-full'
-										style={{
-											aspectRatio: '36/36',
-											objectFit: 'cover',
-										}}
-									/>
+									<Avatar>
+										<AvatarImage src='https://i.pravatar.cc/150?img=1' />
+										<AvatarFallback>U</AvatarFallback>
+									</Avatar>
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align='end'>
