@@ -1,10 +1,15 @@
+from backend.whisper_model import WhisperMo
+
+import io
+import librosa
+
 import subprocess
 import uvicorn
 
 from os import getenv, path
 from dotenv import load_dotenv
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, File, Form, UploadFile
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -26,6 +31,22 @@ app_spa_proxy_launch_cmd = getenv("APP_SPA_PROXY_LAUNCH_CMD")
 app = FastAPI()
 app.mount("/public", StaticFiles(directory=app_public), name="public")
 templates = Jinja2Templates(directory=app_public)
+
+whisper = WhisperMo(model_name="tiny")
+
+
+@app.post("/api/transcribe")
+async def audio_to_text(timestamp: str = Form(), audio: UploadFile = File()):
+    bt = audio.file.read()
+    memory_file = io.BytesIO(bt)
+    data, sample_rate = librosa.load(memory_file)
+    resample_data = librosa.resample(data, orig_sr=sample_rate, target_sr=16000)
+    text = whisper.transcribe(resample_data)
+    print(text)
+
+    return {
+        "text": text,
+    }
 
 
 @app.get("/api/reply")
