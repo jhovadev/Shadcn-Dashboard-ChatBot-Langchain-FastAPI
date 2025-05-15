@@ -1,5 +1,7 @@
 # React + FastAPI + RecordRTC + Faster-Whisper
 
+:) 
+
 This is a project that demonstrates how to use the [Faster-Whisper](https://github.com/guillaumekln/faster-whisper) library with [React](https://reactjs.org/) and [FastAPI](https://fastapi.tiangolo.com/).
 
 ## 📝 Table of Contents
